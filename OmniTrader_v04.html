@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#0a101a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OmniTrader">
+  <meta name="description" content="Mobilní testovací aplikace OmniTrader Pocket: virtuální obchody BTC/ETH a AI úkoly bez skutečných peněz.">
+
+
+
+  <style>
+:root{color-scheme:dark;--bg:#0a101a;--bg2:#0c1421;--card:#101b2b;--card2:#142135;--line:#273247;--text:#eff5fd;--muted:#96a5bd;--faint:#63758c;--mint:#68f1ce;--mint-dim:#173f39;--red:#ff7e8b;--red-dim:#3c222e;--blue:#8abfff;--lilac:#a69cf5;--r:20px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-synthesis:none;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:var(--bg);color:var(--text);min-height:100vh}button,input,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--mint);outline-offset:3px}input,textarea{color:var(--text);background:#0c1625;border:1px solid #30415b;border-radius:13px;padding:13px 14px;width:100%;font-size:16px}textarea{resize:vertical}h1,h2,h3,p{margin-top:0}strong{font-weight:700}main{padding:18px 17px 32px;max-width:610px;margin:0 auto}.app{min-height:100dvh;padding-top:env(safe-area-inset-top);padding-bottom:calc(74px + env(safe-area-inset-bottom))}.topbar{padding:18px 17px 14px;max-width:630px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px}.brand{display:flex;align-items:center;gap:9px;min-width:0}.brand-icon{height:39px;width:39px;display:grid;place-items:center;border-radius:12px;background:#162e37;border:1px solid #285a59;color:var(--mint);font-size:24px;box-shadow:0 0 22px #47f5ce10}.brand-copy{display:flex;flex-direction:column;gap:2px;letter-spacing:-.4px}.brand-copy strong{font-size:17px;white-space:nowrap}.brand-copy strong span{color:var(--mint)}.brand-copy small{color:#7d92a8;font-weight:700;letter-spacing:1.3px;font-size:9px}.brand-copy small .version{letter-spacing:0;color:#8192aa;font-weight:500}.top-actions{display:flex;align-items:center;gap:8px}.demo-pill{white-space:nowrap;background:#15372f;color:#82f5ce;border:1px solid #24664e;border-radius:100px;padding:8px 10px;font-weight:800;font-size:10px;letter-spacing:.35px}.demo-pill i,.live-dot{display:inline-block;width:6px;height:6px;background:#76ecc0;border-radius:50%;margin-right:4px}.round-btn{border:1px solid #314056;background:#121d2c;color:#acc1d8;width:34px;height:34px;border-radius:50%;font-size:16px}.view{display:none;animation:appear .18s ease-out}.view.active{display:block}@keyframes appear{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}.subhead{display:flex;align-items:center;justify-content:space-between;gap:7px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.45px;color:#77d9ca}.quiet{font-size:11px;color:#6f839b}.main-heading{font-size:clamp(25px,7vw,32px);line-height:1.16;letter-spacing:-1.2px;margin:12px 0 12px;font-weight:780}.main-heading em,.page-title em{font-style:normal;color:var(--mint)}.page-title{font-size:clamp(28px,7.3vw,34px);letter-spacing:-1.2px;line-height:1.2;margin:7px 0 12px}.warning-line{display:flex;gap:8px;align-items:center;color:#b3bfd0;font-size:11px;line-height:1.45;margin-bottom:17px}.warning-line span{color:#e4a96e;font-size:13px}.balance-card{position:relative;overflow:hidden;border-radius:23px;background:linear-gradient(130deg,#122b30 2%,#132537 48%,#102036 100%);border:1px solid #2c5961;box-shadow:0 8px 28px #00000022;margin-bottom:26px}.balance-glow{position:absolute;right:-42px;top:-70px;width:200px;height:200px;background:radial-gradient(circle,#4df6d629,transparent 70%);pointer-events:none}.balance-content{position:relative;padding:23px 20px 18px}.overline{font-size:10px;letter-spacing:1.1px;color:#afcece;font-weight:800;display:flex;justify-content:space-between;align-items:center}.overline span{font-size:23px;color:var(--mint)}.big-number{font-size:clamp(34px,10vw,46px);line-height:1.1;white-space:nowrap;letter-spacing:-2px;font-weight:800;margin-top:14px;font-variant-numeric:tabular-nums}.big-number small{font-size:17px;letter-spacing:0;color:#a5d8d0}.balance-meta{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-top:12px}.change-pill{background:#1c3e37;color:var(--mint);border:1px solid #275c4d;border-radius:100px;padding:7px 10px;font-size:11px;font-weight:750;white-space:nowrap}.change-pill.negative{color:#ffabb0;background:#3b2932;border-color:#59313d}.change-pill.neutral{color:#d8e4e5;background:#233842;border-color:#365263}.cash-note{font-size:11px;color:#bfd0d6;text-align:right}.balance-divider{border-top:1px solid #31515c;margin:21px 0 14px}.balance-footer{display:flex;justify-content:space-between;gap:8px;color:#86abb8;font-size:10px;font-weight:750;letter-spacing:.45px}.balance-footer span:last-child{color:#aabfc8;font-weight:500;letter-spacing:0}.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px}.section-title h2{margin:0;font-size:16px;letter-spacing:-.3px}.small-label{color:#71859c;font-size:11px}.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat-card{background:#111b2b;border:1px solid #26364a;border-radius:17px;padding:16px 15px;min-width:0}.stat-card>span{color:#91a5ba;font-size:11px}.stat-card strong{font-size:28px;display:block;margin:6px 0;letter-spacing:-1px}.stat-card small{color:#71839c;font-size:10px}.service-stack,.item-stack,.setting-actions{display:grid;gap:9px}.service-row{display:flex;align-items:center;text-align:left;gap:12px;background:#111b2b;border:1px solid #253447;border-radius:16px;padding:14px 13px;width:100%;color:var(--text)}.service-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:none;font-size:23px}.service-icon.mint{color:#79edd2;background:#173a38}.service-icon.lilac{color:#b4a7f3;background:#292742}.service-icon.sky{color:#97c6ed;background:#1a3047}.service-icon.red{color:#ff8f99;background:#3a2731}.service-row>span:nth-child(2){display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}.service-row strong{font-size:13px}.service-row small{font-size:11px;color:#8499ad;line-height:1.35}.service-end{display:flex;gap:10px;align-items:center;margin-left:auto;white-space:nowrap}.service-end b{font-size:10px;color:var(--mint);font-weight:650}.service-end b.muted-status{color:#a4b3c7}.service-end>span,.setting-actions .service-row>b{font-size:25px;font-weight:400;color:#7e91a8}.note-card{background:#10202b;border:1px solid #294552;border-radius:15px;display:flex;align-items:flex-start;gap:10px;padding:13px;margin-top:19px}.note-card p{font-size:11px;color:#91adba;line-height:1.55;margin:0}.note-icon{color:var(--mint);font-size:15px;border:1px solid #376463;border-radius:50%;width:20px;height:20px;text-align:center;flex:none}.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;justify-content:space-around;gap:1px;background:#0c1624eF;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid #2b3b4d;padding:9px 8px calc(8px + env(safe-area-inset-bottom))}.nav-item{border:0;background:transparent;color:#71869e;min-height:49px;display:flex;flex:1;flex-direction:column;align-items:center;gap:4px;font-size:10px;font-weight:650}.nav-icon{font-size:24px;font-weight:450;line-height:26px}.nav-item.active{color:#74e9ce}.nav-item.active .nav-icon{text-shadow:0 0 18px #68e9c983}.coin-toggle{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 12px}.coin-tab{display:flex;align-items:center;text-align:left;gap:10px;border:1px solid #27384c;border-radius:16px;background:#111c2c;color:#e6ecf4;padding:11px;font-size:13px;font-weight:700}.coin-tab.active{border-color:#4eaa9b;background:#163239;box-shadow:inset 0 0 0 1px #56d4b720}.coin-tab small{display:block;color:#8da0b6;font-size:10px;margin-top:4px;font-weight:500}.symbol-glyph{font-size:18px;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;flex:none}.symbol-glyph.btc{background:#5d4325;color:#ffc678}.symbol-glyph.eth{background:#343c64;color:#c5d3ff}.chart-card{background:#101b2b;border:1px solid #29374a;border-radius:20px;padding:15px 13px 12px;overflow:hidden}.chart-header{display:flex;align-items:flex-start;justify-content:space-between}.price-number{font-size:29px;font-weight:800;letter-spacing:-.7px;margin:8px 0 3px}.chart-sub{font-size:11px;color:#95a6ba}.period-chip{font-size:10px;color:#8defcf;background:#173a32;border:1px solid #2e5d51;border-radius:100px;padding:7px 9px;font-weight:800}.chart-card svg{display:block;width:100%;height:158px;margin:19px 0 5px}.chart-legend{display:flex;gap:16px;justify-content:center;color:#8299ae;font-size:10px}.legend-dot{width:7px;height:7px;display:inline-block;border-radius:50%;margin-right:3px;background:var(--mint)}.legend-dot.ema{background:#8faaf5}.legend-dot.ema2{background:#a47cf5}.market-status{display:flex;justify-content:space-between;gap:6px;align-items:center;color:#8499ad;font-size:11px;margin:14px 2px 11px}.pulse-dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:#59e6b5;box-shadow:0 0 12px #59e6b555;margin-right:5px}.pulse-dot.off{background:#8b9aaa;box-shadow:none}.control-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.button-primary,.button-outline,.button-buy,.button-sell{border-radius:13px;min-height:46px;border:1px solid transparent;font-size:12px;font-weight:760;padding:11px;white-space:normal}.button-primary{background:#67e7c8;color:#063027;box-shadow:0 5px 16px #66e7cb20}.button-outline{border-color:#3d5166;background:#142234;color:#c9deef}.button-buy{background:#13392f;color:#89eecd;border-color:#2b6a55}.button-sell{background:#39232b;color:#ffabaf;border-color:#703944}.full{width:100%}.hint{color:#71869d;font-size:11px;line-height:1.55;margin:10px 2px 0}.hint strong{color:#a7bbce}.signal-card{font-size:11px;line-height:1.55;color:#a9becf;background:#132333;border:1px solid #304a60;border-radius:13px;padding:12px;margin-top:16px}.signal-card b{color:#d6e9ef}.position-item,.trade-item,.task-item{border-radius:14px;border:1px solid #28374a;background:#111b29;padding:12px 13px}.item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.item-title{font-size:13px;font-weight:760}.item-sub{color:#8599ad;font-size:10px;line-height:1.5;margin-top:4px}.item-value{font-size:13px;font-weight:790;white-space:nowrap}.positive{color:var(--mint)!important}.negative{color:var(--red)!important}.empty-state{border:1px dashed #314055;border-radius:13px;padding:22px 12px;text-align:center;color:#778ea6;font-size:12px}.text-action{border:0;background:transparent;color:#81e4cf;font-size:11px;padding:4px 0}.gateway-card{border:1px solid #3d455f;border-radius:19px;background:linear-gradient(145deg,#191d33,#122233);padding:17px}.gateway-head{display:flex;gap:10px;align-items:center}.gateway-logo{width:40px;height:40px;border-radius:12px;background:#343255;color:#c5baff;display:grid;place-items:center;font-size:25px}.gateway-head h2{font-size:17px;margin:3px 0 0}.offline-pill{margin-left:auto;color:#adb2c6;background:#292e43;padding:7px 8px;border-radius:100px;font-size:9px;white-space:nowrap;font-weight:800}.gateway-card>p{font-size:11px;color:#9eaac0;line-height:1.55;margin:15px 0}.route-flow{display:flex;flex-direction:column;align-items:center;margin:17px 0 15px}.route-node{border:1px solid #4b5269;border-radius:9px;background:#263249;color:#dbe7f2;padding:9px 20px;font-size:12px;text-align:center;min-width:175px}.route-node.route-main{background:#30304c;border-color:#817bba;color:#eeeaff;font-weight:750}.route-arrow{color:#8294b5;font-size:19px;line-height:22px}.route-split{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}.route-split span{background:#1c2a3d;border:1px solid #3e4b65;text-align:center;padding:10px 3px;border-radius:9px;font-size:11px}.route-result{font-size:11px;text-align:center;color:#a6b7ca;margin-top:10px;line-height:1.6}.task-item p{font-size:11px;color:#9aadc1;line-height:1.5;margin:7px 0 9px;overflow-wrap:anywhere;white-space:pre-wrap}.task-item .item-top .item-title{flex:1}.task-item button{background:transparent;border:0;color:#eb9ba3;font-size:11px;padding:5px 0}.task-form{background:#111d2b;border:1px solid #2c394e;border-radius:18px;padding:17px;margin-top:14px;display:grid;gap:9px}.task-form label{color:#b2c1d2;font-size:11px;font-weight:750}.task-form .hint{margin-top:0}.settings-banner{display:flex;gap:12px;align-items:center;padding:15px;background:#153027;border:1px solid #2b624d;border-radius:15px;margin:17px 0}.settings-banner>span{font-size:22px;color:#7ae8b8}.settings-banner strong,.settings-banner small{display:block}.settings-banner strong{font-size:13px}.settings-banner small{color:#a3beb1;font-size:11px;margin-top:3px;line-height:1.5}.settings-form{background:#111b2b;border:1px solid #2d3a4d;border-radius:17px;padding:0 14px 14px}.setting-row{padding:14px 1px;border-bottom:1px solid #28364a;display:flex;align-items:center;gap:12px}.setting-row label{flex:1;font-size:12px;font-weight:700}.setting-row label small{display:block;color:#8194a8;font-size:10px;line-height:1.45;margin-top:4px;font-weight:400}.setting-row input{width:96px;flex:none;min-width:0;padding:9px 8px;text-align:right;font-size:15px}.settings-form .button-primary{margin-top:14px}.danger-row{border-color:#563b46}.danger-row strong{color:#ffabb5}.toast{position:fixed;z-index:70;bottom:calc(88px + env(safe-area-inset-bottom));left:16px;right:16px;max-width:510px;margin:0 auto;padding:13px 16px;background:#233e43;border:1px solid #458b7b;color:#e3fff5;border-radius:15px;box-shadow:0 10px 35px #0009;font-size:12px;line-height:1.4;display:none}.toast.error{background:#3f2430;border-color:#a25267;color:#ffe1e3}.modal{max-width:min(420px,calc(100% - 32px));width:100%;border:1px solid #485970;border-radius:19px;padding:19px;background:#152136;color:#edf3fc;box-shadow:0 20px 60px #000c}.modal::backdrop{background:#000a}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.modal-body{font-size:13px;line-height:1.7;color:#b1c1d5;margin-bottom:20px;white-space:pre-line}.modal-body strong{color:white}.modal[open]{animation:appear .2s ease}
+@media(min-width:680px){.app{max-width:640px;margin:0 auto;border-left:1px solid #243246;border-right:1px solid #243246;min-height:100vh}.bottom-nav{max-width:640px;margin:auto}.topbar{padding:23px 24px 10px}main{padding:22px 25px 34px}}
+@media(max-width:365px){.brand-copy strong{font-size:15px}.brand-icon{width:35px;height:35px}.demo-pill{font-size:8px;padding:8px 7px}.balance-content{padding:20px 16px 16px}.cash-note{font-size:9px}.service-row{gap:8px}.service-icon{width:37px;height:37px}.service-row small{font-size:10px}.offline-pill{font-size:8px}}
+
+/* v0.4 controls */
+.market-data-toolbar{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin:14px 0;background:#101b2b;border:1px solid #273247;border-radius:15px;padding:11px 12px}
+.market-data-toolbar label{color:#a9bed1;font-size:13px;font-weight:700}
+.market-data-toolbar select{appearance:auto;color:#eff5fd;background:#18263b;border:1px solid #415571;border-radius:11px;padding:9px 12px;font-size:14px;max-width:200px}
+.market-data-toolbar .feed-caption{grid-column:1/-1;color:#9ab0c8;font-size:12px}
+.auto-brief{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;background:#17283a;padding:11px 13px;margin:12px 0;border-radius:13px;font-size:13px;color:#b5c8db}.auto-brief b{color:#68f1ce}
+#todayCount{font-size:28px}
+
+   .risk-warning{margin-top:12px;padding:9px;border-radius:11px;background:#3a282a;color:#fbbcc3;font-size:12px;line-height:1.5}
+</style>
+  <title>OmniTrader Pocket · Paper Bot v0.4</title>
+</head>
+<body>
+  <div id="app" class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true"><span>✳</span></div>
+        <div class="brand-copy"><strong>Omni<span>Trader</span></strong><small>POCKET LAB <span class="version">v0.4</span></small></div>
+      </div>
+      <div class="top-actions"><span class="demo-pill"><i></i> PAPER MODE</span><button id="infoBtn" class="round-btn" aria-label="O aplikaci">?</button></div>
+    </header>
+
+    <main>
+      <section id="view-home" class="view active" aria-labelledby="home-title">
+        <div class="subhead"><span class="eyebrow">TVŮJ TESTOVACÍ EKOSYSTÉM</span><span id="clockLabel" class="quiet">Lokální demo</span></div>
+        <h1 id="home-title" class="main-heading">Všechno pod <em>kontrolou.</em></h1>
+        <div class="warning-line"><span>●</span> VIRTUÁLNÍ ÚČET. Žádné skutečné nákupy ani prodeje.</div>
+        <article class="balance-card">
+          <div class="balance-glow"></div>
+          <div class="balance-content">
+            <div class="overline">HODNOTA VIRTUÁLNÍHO PORTFOLIA <span>✳</span></div>
+            <div class="big-number" id="equityHome">2 500,00 <small>Kč</small></div>
+            <div class="balance-meta"><span id="pnlPill" class="change-pill neutral">0,00 Kč (0 %)</span><span id="cashHome" class="cash-note">Hotovost: 2 500 Kč</span></div>
+            <div class="balance-divider"></div>
+            <div class="balance-footer"><span><i class="live-dot"></i> POUZE SIMULACE</span><span>Start 2 500 Kč</span></div>
+          </div>
+        </article>
+
+        <div class="section-title"><h2>Rychlý přehled</h2><span class="small-label">Aktualizace při testu</span></div>
+        <div class="quick-grid">
+          <div class="stat-card"><span>Otevřené pozice</span><strong id="positionsCount">0</strong><small>max. 2 současně</small></div>
+          <div class="stat-card"><span>Dnes uzavřeno</span><strong id="todayCount">0 / 2000</strong><small>virtuálních obchodů</small></div>
+        </div>
+        <div class="section-title"><h2>Služby ekosystému</h2></div>
+        <div class="service-stack">
+          <button class="service-row" data-go="trade"><span class="service-icon mint">⌁</span><span><strong>Trading laboratoř</strong><small>BTC a ETH · automatické papírové obchody</small></span><span class="service-end"><b id="paperIndicator">Vypnuto</b><span>›</span></span></button>
+          <button class="service-row" data-go="ai"><span class="service-icon lilac">✳</span><span><strong>AI koordinátor</strong><small>Úkoly + připravená vrstva OmniRoute</small></span><span class="service-end"><b class="muted-status">Offline</b><span>›</span></span></button>
+          <button class="service-row" data-go="settings"><span class="service-icon sky">⚙</span><span><strong>Limity a bezpečnost</strong><small>Správa simulace a modelových nákladů</small></span><span class="service-end"><b class="muted-status">Aktivní</b><span>›</span></span></button>
+        </div>
+        <div class="note-card"><div class="note-icon">ℹ</div><p>Tato verze nemá žádný server. Pracuje pouze při otevřeném iPhonu; po zamčení se automatika zastaví. Žádné příkazy se neposílají Revolutu X ani jiné burze.</p></div>
+      </section>
+
+      <section id="view-trade" class="view" aria-labelledby="trade-title">
+        <div class="eyebrow">PAPER TRADING · BTC / ETH</div>
+        <h1 id="trade-title" class="page-title">Trading <em>laboratoř.</em></h1>
+        <div class="warning-line"><span>●</span> Všechny obchody jsou virtuální. Volitelně lze sledovat skutečné veřejné ceny Kraken.</div>
+        <div class="market-data-toolbar"><label for="dataMode">Zdroj cen</label><select id="dataMode"><option value="demo">Syntetické demo</option><option value="live">Kraken LIVE (jen data)</option></select><div id="feedStatus" class="feed-caption">Syntetické ceny</div></div>
+        <div class="coin-toggle" role="group" aria-label="Vyber trh">
+          <button class="coin-tab active" data-symbol="BTC"><span class="symbol-glyph btc">₿</span><span>Bitcoin<small>BTC / USD</small></span></button>
+          <button class="coin-tab" data-symbol="ETH"><span class="symbol-glyph eth">◇</span><span>Ethereum<small>ETH / USD</small></span></button>
+        </div>
+        <article class="chart-card">
+          <div class="chart-header"><div><span class="eyebrow">CENA BTC / ETH V USD</span><div class="price-number" id="marketPrice">—</div><div id="marketMovement" class="chart-sub">Změna za poslední demo svíčku</div></div><span class="period-chip">5M · PAPER</span></div>
+          <svg id="chart" viewBox="0 0 340 164" preserveAspectRatio="none" role="img" aria-label="Graf cen BTC nebo ETH"></svg>
+          <div class="chart-legend"><span><i class="legend-dot current"></i> Cena</span><span><i class="legend-dot ema"></i> EMA 12</span><span><i class="legend-dot ema2"></i> EMA 26</span></div>
+        </article>
+        <div class="market-status"><span id="simStatus"><i class="pulse-dot off"></i> Simulace zastavena</span><span id="candleCount">0 demo svíček</span></div>
+        <div class="control-grid"><button id="toggleBot" class="button-primary">▶ Spustit virtuálního bota</button><button id="nextCandle" class="button-outline">+ 5 min (demo)</button></div>
+        <div class="auto-brief"><span>Čistý cílový zisk: <b id="profitTarget">5 Kč</b></span><span>Automatika: <b id="autoStatus">Pozastaven</b></span></div>
+        <p class="hint">Bez serveru bot pracuje <strong>jen při otevřené a aktivní aplikaci</strong>. V demu vzniká umělá 5min svíčka každých 15 s; v režimu Kraken přicházejí skutečné ceny a 5min svíčky. Při zamčení se zastaví. Cíle jsou simulované, ne garantované.</p>
+        <div class="section-title"><h2>Ruční test obchodu</h2><span class="small-label" id="perTradeLimit">500 Kč / pozice</span></div>
+        <div class="control-grid"><button id="buyButton" class="button-buy">＋ Virtuálně koupit</button><button id="sellButton" class="button-sell">↗ Uzavřít pozici</button></div>
+        <div id="strategyStatus" class="signal-card"></div>
+        <div class="section-title"><h2>Otevřené pozice</h2></div>
+        <div id="positions" class="item-stack"><div class="empty-state">Zatím žádná pozice.</div></div>
+        <div class="section-title"><h2>Poslední příkazy</h2><button id="exportTrades" class="text-action">Export CSV ↗</button></div>
+        <div id="trades" class="item-stack"><div class="empty-state">Zatím žádné obchody.</div></div>
+      </section>
+
+      <section id="view-ai" class="view" aria-labelledby="ai-title">
+        <div class="eyebrow">MODELY · ÚKOLY · ROUTING</div>
+        <h1 id="ai-title" class="page-title">AI <em>centrum.</em></h1>
+        <div class="warning-line"><span>●</span> AI modely nejsou připojené; běží pouze ukázka.</div>
+        <article class="gateway-card">
+          <div class="gateway-head"><div class="gateway-logo">✳</div><div><span class="eyebrow">MODEL GATEWAY</span><h2>OmniRoute</h2></div><span class="offline-pill">NEPŘIPOJENO</span></div>
+          <p>Centrální směrování modelů a automatická záloha. Skutečné API modelů není připojeno. Tato verze funguje bez serveru a neukládá žádná tajemství. Trading vyhodnocují výhradně pevně daná pravidla, nikoliv AI.</p>
+          <div class="route-flow"><div class="route-node">AI koordinátor</div><div class="route-arrow">↓</div><div class="route-node route-main">OmniRoute · auto</div><div class="route-arrow">↓</div><div class="route-split"><span>Model A</span><span>Model B</span><span>Model C</span></div></div>
+          <button id="routeTest" class="button-outline full">Vyzkoušet ukázkové přepnutí modelu</button><div id="routeResult" class="route-result" role="status">Zatím neproběhl ukázkový test.</div>
+        </article>
+        <div class="section-title"><h2>Seznam úkolů</h2><span class="small-label" id="taskCount">0 připraveno</span></div>
+        <div id="taskList" class="item-stack"></div>
+        <form id="taskForm" class="task-form">
+          <label for="taskTitle">Nový úkol pro budoucí AI koordinátor</label>
+          <input id="taskTitle" maxlength="70" placeholder="Např. Analyzovat BTC a ETH" required>
+          <label for="taskPrompt">Zadání</label>
+          <textarea id="taskPrompt" maxlength="900" rows="3" placeholder="Co má AI zpracovat?" required></textarea>
+          <button class="button-primary full" type="submit">＋ Uložit úkol</button>
+          <p class="hint">Úkol se pouze uloží v iPhonu. Žádný skutečný AI model ho nevykonává.</p>
+        </form>
+      </section>
+
+      <section id="view-settings" class="view" aria-labelledby="settings-title">
+        <div class="eyebrow">PARAMETRY · BEZPEČNOST</div>
+        <h1 id="settings-title" class="page-title">Nastavení <em>dema.</em></h1>
+        <div class="settings-banner"><span>◈</span><div><strong>Bezpečný režim</strong><small>Žádná páka, žádné API klíče, žádné skutečné peníze.</small></div></div>
+        <form id="settingsForm" class="settings-form">
+          <div class="setting-row"><label for="maxPosition">Max. jedna pozice <small>Virtuální částka v Kč</small></label><input id="maxPosition" type="number" min="100" max="2500" step="50" required></div>
+          <div class="setting-row"><label for="dailyLoss">Max. denní ztráta <small>Blokace nových automatických nákupů</small></label><input id="dailyLoss" type="number" min="10" max="2500" step="10" required></div>
+          <div class="setting-row"><label for="feePct">Poplatek za jednu stranu <small>Modelový údaj v %</small></label><input id="feePct" type="number" min="0" max="5" step="0.01" required></div>
+          <div class="setting-row"><label for="spreadPct">Celkový spread <small>Modelový údaj v %</small></label><input id="spreadPct" type="number" min="0" max="5" step="0.01" required></div>
+          <div class="setting-row"><label for="targetProfitCzk">Cílový ČISTÝ zisk <small>Automaticky prodat při zisku po nákladech v Kč</small></label><input id="targetProfitCzk" type="number" min="1" max="250" step="1" required></div>
+          <div class="setting-row"><label for="lossAlertCzk">Výstraha při ztrátě pozice <small>Upozornit při modelované ztrátě v Kč, automaticky NEPRODÁVAT</small></label><input id="lossAlertCzk" type="number" min="1" max="250" step="1" required></div>
+          <div class="setting-row"><label for="maxRoundTrips">Max. dokončených obchodů denně <small>Nejde o požadovaný počet, ale horní limit</small></label><input id="maxRoundTrips" type="number" min="1" max="2000" step="1" required></div>
+          <button type="submit" class="button-primary full">Uložit limity</button>
+        </form>
+        <div class="section-title"><h2>Data a instalace</h2></div>
+        <div class="setting-actions"><button id="howInstall" class="service-row"><span class="service-icon sky">↗</span><span><strong>Přidat na plochu iPhonu</strong><small>Návod k instalaci jako webové aplikace</small></span><b>›</b></button><button id="resetAll" class="service-row danger-row"><span class="service-icon red">↺</span><span><strong>Resetovat celé demo</strong><small>Smaže virtuální obchody a AI úkoly</small></span><b>›</b></button></div>
+        <div class="note-card"><div class="note-icon">!</div><p>Výsledky vycházejí ze syntetických cen nebo skutečných veřejných kurzů Kraken, ale obchody jsou pouze virtuální. Modelované poplatky nemusí odpovídat Revolutu X; zisky nejsou zaručené. Bez serveru se automatika při zamčení zastaví.</p></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Hlavní navigace">
+      <button class="nav-item active" data-tab="home" aria-label="Přehled"><span class="nav-icon">▦</span><span>Přehled</span></button>
+      <button class="nav-item" data-tab="trade" aria-label="Obchody"><span class="nav-icon">⌁</span><span>Obchody</span></button>
+      <button class="nav-item" data-tab="ai" aria-label="AI centrum"><span class="nav-icon">✳</span><span>AI centrum</span></button>
+      <button class="nav-item" data-tab="settings" aria-label="Nastavení"><span class="nav-icon">⚙</span><span>Nastavení</span></button>
+    </nav>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="dialog" class="modal"><div class="modal-head"><strong id="modalTitle">Informace</strong><button id="modalClose" class="round-btn" aria-label="Zavřít">✕</button></div><div id="modalText" class="modal-body"></div><button id="modalOk" class="button-primary full">Rozumím</button></dialog>
+  <script>
+'use strict';
+// OmniTrader Pocket v0.4 — foreground-only paper trading. NEVER LIVE TRADES.
+const STORAGE_KEY = 'omni-pocket-demo-v04';
+const PREVIOUS_KEY = 'omni-pocket-demo-v04-start';
+const START_CAPITAL = 2500;
+const $ = id => document.getElementById(id);
+const fmt = (number, decimals=2) => Number(number).toLocaleString('cs-CZ', {minimumFractionDigits:decimals, maximumFractionDigits:decimals});
+const czk = (amount) => `${fmt(amount)} Kč`;
+const html = input => String(input ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clamp = (num,low,high) => Math.max(low, Math.min(high, num));
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+const timeLabel = iso => new Date(iso).toLocaleString('cs-CZ',{day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'});
+let timer = null;
+let socket = null;
+let reconnectTimer = null;
+let pendingRender = false;
+let isActive = false;
+const market = {quotes:{BTC:null,ETH:null}, candles:{BTC:[],ETH:[]}, status:'Vypnuto', lastTime:{BTC:0,ETH:0}, lastCandleTime:{BTC:0,ETH:0}};
+const COINMAP = {'BTC/USD':'BTC','ETH/USD':'ETH'};
+const MAX_QUOTE_AGE = 30000;
+let activeSymbol = 'BTC';
+let toastTimer = null;
+
+function createHistory(start, seed, n=64) {
+  let x = seed >>> 0;
+  const data = [];
+  let price = start;
+  for (let i=0;i<n;i++) {
+    x = (Math.imul(x,1664525) + 1013904223) >>> 0;
+    const noise = x/4294967296-.5;
+    const cyclic = Math.sin(i/7+seed/3000)*.0038;
+    const pct = cyclic + noise*(seed===34567?.013:.018);
+    price = Math.max(start*.68, price*(1+pct));
+    data.push(Number(price.toFixed(3)));
+  }
+  return data;
+}
+function newState() {
+  return {
+    schema:2,
+    cash:START_CAPITAL,
+    positions:{},
+    trades:[],
+    tasks:[{id:1,title:'Krátkodobý přehled BTC a ETH',prompt:'Každé ráno zhodnoť trend BTC a ETH, popiš rizika. Nezadávej žádné skutečné obchody.',createdAt:new Date().toISOString()}],
+    nextTaskId:2,
+    histories:{BTC:createHistory(64000,34567),ETH:createHistory(3100,65711)},
+    settings:{maxPosition:500,dailyLoss:50,feePct:.09,spreadPct:.1,stopLoss:1.5,takeProfit:2.5,targetProfitCzk:5,lossAlertCzk:25,maxRoundTrips:2000},
+    dataMode:'demo',lastAutoAt:{BTC:0,ETH:0},
+    randomSeed:120426,
+    tickCount:0,
+    todayDate:today(),
+    dayStartEquity:START_CAPITAL,
+    runStopped:false,completedToday:0
+  };
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(PREVIOUS_KEY);
+    if(raw){
+      const v=JSON.parse(raw);
+      if(v && v.schema===2 && Number.isFinite(v.cash) && Array.isArray(v.trades) && Array.isArray(v.tasks) && v.histories && v.settings && v.positions){
+        const defaults=newState();
+        v.settings={...defaults.settings,...v.settings};
+        v.dataMode=v.dataMode==='live'?'live':'demo';
+        v.completedToday=Number.isFinite(v.completedToday)?v.completedToday:v.trades.filter(t=>t.side==='SELL' && String(t.at).slice(0,10)===today()).length;
+        v.lastAutoAt=v.lastAutoAt||{BTC:0,ETH:0};
+        return v;
+      }
+    }
+  }catch(e){}
+  return newState();
+}
+let state = loadState();
+function store() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) { toast('Úložiště je nedostupné. Data po zavření nemusí zůstat.',true); } }
+function toast(message,isError=false) {
+  const el=$('toast'); el.textContent=message; el.className='toast'+(isError?' error':''); el.style.display='block';
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>{el.style.display='none'},4000);
+}
+function price(symbol) {
+  if(state.dataMode==='live') return market.quotes[symbol]?.last ?? NaN;
+  const h=state.histories[symbol]; return h[h.length-1];
+}
+function bid(symbol) {
+  if(state.dataMode==='live'){
+    const q=market.quotes[symbol];if(!q || !Number.isFinite(q.bid) || !freshQuote(symbol))return NaN;
+    return q.bid*(1-state.settings.spreadPct/200);
+  }
+  return price(symbol)*(1-state.settings.spreadPct/200);
+}
+function ask(symbol) {
+  if(state.dataMode==='live'){
+    const q=market.quotes[symbol];if(!q || !Number.isFinite(q.ask) || !freshQuote(symbol))return NaN;
+    return q.ask*(1+state.settings.spreadPct/200);
+  }
+  return price(symbol)*(1+state.settings.spreadPct/200);
+}
+function fee(amount) { return Math.max(0, amount*state.settings.feePct/100); }
+function positionValue(position) {
+  const sellPrice=bid(position.symbol);
+  if(!Number.isFinite(sellPrice))return position.allocated; // Unpriced position, show cost basis; forbid auto trading.
+  const gross=position.units*sellPrice;
+  return Math.max(0,gross-fee(gross));
+}
+function equity() { return state.cash+Object.values(state.positions).reduce((acc,p)=>acc+positionValue(p),0); }
+function refreshDay() {
+  if (state.todayDate!==today()) {
+    state.todayDate=today();state.dayStartEquity=equity();state.runStopped=false;state.completedToday=0;store();
+  }
+}
+function lossLimitReached(){return state.dayStartEquity-equity() >= state.settings.dailyLoss-0.000001;}
+function tradeRecord(symbol, side, allocated, priceNow, feeCzk, pnl, reason) {
+  state.trades.unshift({id:Date.now()+Math.random(),at:new Date().toISOString(),demoCandle:state.tickCount,symbol,side,allocated,price:priceNow,fee:feeCzk,pnl,reason});
+  state.trades=state.trades.slice(0,4000);
+}
+function buy(symbol, manual=false) {
+  refreshDay();
+  if(!Number.isFinite(ask(symbol))){if(manual)toast('Čekám na aktuální ceny trhu.',true);return false;}
+  if(state.positions[symbol]){if(manual)toast(`Na ${symbol} už máš otevřenou pozici.`,true);return false;}
+  if(lossLimitReached() || state.runStopped || state.completedToday>=state.settings.maxRoundTrips){if(manual)toast('Dosažen limit obchodů nebo ztráty.',true);return false;}
+  const allocated=Math.min(state.settings.maxPosition,state.cash);
+  if(allocated<100){if(manual)toast('Nedostatek virtuální hotovosti.',true);return false;}
+  const transactionFee=fee(allocated),net=allocated-transactionFee,entry=ask(symbol);
+  if(net<=0)return false;
+  const units=net/entry;
+  state.positions[symbol]={symbol,allocated,entryPrice:entry,entryRaw:price(symbol),units,openedAt:new Date().toISOString(),openedIndex:state.tickCount,openedAtMs:Date.now(),marketMode:state.dataMode};
+  state.cash=Number((state.cash-allocated).toFixed(8));
+  tradeRecord(symbol,'BUY',allocated,price(symbol),transactionFee,null,manual?'ručně':'trend EMA + momentum');
+  store();if(manual)toast(`${symbol}: virtuálně nakoupeno za ${fmt(allocated,0)} Kč.`);return true;
+}
+function sell(symbol,reason='ručně',manual=false) {
+  const p=state.positions[symbol];
+  if(!p){if(manual)toast(`Na ${symbol} nemáš otevřenou pozici.`,true);return false;}
+  if(!Number.isFinite(bid(symbol))){if(manual)toast('Aktuální kurz není dostupný – prodej pozastaven.',true);return false;}
+  const gross=p.units*bid(symbol),exitFee=fee(gross),net=Math.max(0,gross-exitFee);
+  const pnl=net-p.allocated;
+  if(manual && pnl < 0 && !confirm(`Pozor: virtuální prodej ${symbol} by realizoval ztrátu ${czk(pnl)}. Chceš pozici opravdu ručně uzavřít?`))return false;
+  state.cash=Number((state.cash+net).toFixed(8));
+  delete state.positions[symbol];
+  state.completedToday++;
+  state.lastAutoAt[symbol]=Date.now();
+  tradeRecord(symbol,'SELL',net,price(symbol),exitFee,pnl,reason);
+  if(state.completedToday>=state.settings.maxRoundTrips){state.runStopped=true;toast('Dosažen denní limit virtuálních obchodů; nové nákupy pozastaveny.');}
+  store();if(manual)toast(`${symbol}: virtuálně uzavřeno. Výsledek ${czk(pnl)}.`);return true;
+}
+function ema(history,period) {
+  let prev=history[0],k=2/(period+1),out=[];
+  for(let i=0;i<history.length;i++){prev=i===0?history[i]:history[i]*k+prev*(1-k);out.push(prev);}
+  return out;
+}
+function signal(symbol) {
+  const h=history(symbol);
+  if(h.length<30)return 'HOLD';
+  const short=ema(h,12),long=ema(h,26),i=h.length-1;
+  if(short[i-1]<=long[i-1] && short[i]>long[i])return 'BUY';
+  if(short[i-1]>=long[i-1] && short[i]<long[i])return 'SELL';
+  return 'HOLD';
+}
+function history(symbol){
+  if(state.dataMode==='live')return market.candles[symbol].map(x=>x.close);
+  return state.histories[symbol];
+}
+function freshQuote(symbol){return Date.now()-(market.lastTime[symbol]||0)<MAX_QUOTE_AGE && market.quotes[symbol]!==null;}
+function estimatedPnl(symbol){const p=state.positions[symbol];if(!p || !Number.isFinite(bid(symbol)))return NaN;const gross=p.units*bid(symbol);return Math.max(0,gross-fee(gross))-p.allocated;}
+function evaluateExit(symbol){
+  if(!isActive || !state.positions[symbol] || state.dataMode==='live'&&!freshQuote(symbol))return;
+  const pl=estimatedPnl(symbol);
+  if(!Number.isFinite(pl))return;
+  if(pl>=state.settings.targetProfitCzk) sell(symbol,'čistý cíl +'+fmt(state.settings.targetProfitCzk,0)+' Kč');
+  // Ztrátu nikdy automaticky nerealizujeme; její hodnota však může růst bez omezení.
+}
+function trendEntry(symbol){
+  const h=history(symbol); if(h.length<30)return false;
+  const fast=ema(h,12),slow=ema(h,26);const n=h.length-1;
+  return fast[n]>slow[n] && h[n]>h[n-1] && fast[n]>=fast[n-1];
+}
+function maybeAutoBuy(symbol){
+  if(!isActive || state.runStopped || lossLimitReached() || state.completedToday>=state.settings.maxRoundTrips || state.positions[symbol])return false;
+  if(state.dataMode==='live' && !freshQuote(symbol))return false;
+  if(Date.now()-(state.lastAutoAt[symbol]||0) < 120000)return false;
+  if(!trendEntry(symbol))return false;
+  return buy(symbol);
+}
+function checkDailyRisk(){
+  if(!isActive)return;
+  if(lossLimitReached()){
+    if(!state.runStopped){state.runStopped=true;toast('Pozor: pokles hodnoty ≥ denní limit. Nové nákupy zastaveny, otevřené pozice zůstávají.',true);store();}
+  }
+}
+function statusText(){
+  if(state.dataMode==='demo')return 'Syntetické ceny · vzdělávací simulace';
+  return market.status + ' · Kraken veřejná data';
+}
+function connectMarket(){
+  disconnectMarket();
+  if(state.dataMode!=='live' || document.hidden)return;
+  market.status='Připojuji…';scheduleRender();
+  try{
+    socket=new WebSocket('wss://ws.kraken.com/v2');
+    const current=socket;
+    current.onopen=()=>{
+      if(socket!==current)return;
+      market.status='Připojeno · čekám na kotace';
+      current.send(JSON.stringify({method:'subscribe',params:{channel:'ticker',symbol:['BTC/USD','ETH/USD'],snapshot:true}}));
+      current.send(JSON.stringify({method:'subscribe',params:{channel:'ohlc',symbol:['BTC/USD','ETH/USD'],interval:5,snapshot:true}}));
+      scheduleRender();
+    };
+    current.onmessage=ev=>{
+      if(socket!==current)return;
+      let msg;try{msg=JSON.parse(ev.data);}catch{return;}
+      if(msg.success===false){market.status='Chyba feedu: '+String(msg.error||'chyba připojení');scheduleRender();return;}
+      if(!Array.isArray(msg.data))return;
+      if(msg.channel==='ticker')for(const d of msg.data){
+        const s=COINMAP[d.symbol]; if(!s)continue;
+        const last=Number(d.last),a=Number(d.ask),b=Number(d.bid);
+        if(![last,a,b].every(x=>Number.isFinite(x)&&x>0))continue;
+        market.quotes[s]={last,ask:a,bid:b};market.lastTime[s]=Date.now();market.status='Aktuální ceny';
+        evaluateExit(s);checkDailyRisk();scheduleRender();
+      }
+      if(msg.channel==='ohlc')for(const d of msg.data){
+        const s=COINMAP[d.symbol],t=Date.parse(d.interval_begin||d.timestamp),close=Number(d.close);
+        if(!s||!Number.isFinite(t)||!Number.isFinite(close)||close<=0)continue;
+        const a=market.candles[s];
+        let closed=false;
+        if(a.length && t>a[a.length-1].t)closed=true;
+        const existing=a.findIndex(x=>x.t===t);
+        if(existing>=0)a[existing].close=close;
+        else {a.push({t,close});a.sort((x,y)=>x.t-y.t);}
+        if(a.length>130)a.splice(0,a.length-130);
+        if(closed && a.length>=30){state.tickCount++; if(isActive)maybeAutoBuy(s);}
+        scheduleRender();
+      }
+    };
+    current.onerror=()=>{market.status='Výpadek feedu';scheduleRender();};
+    current.onclose=()=>{if(socket!==current)return;socket=null;market.status='Odpojeno';stopTimer();scheduleRender();
+      if(state.dataMode==='live'&&!document.hidden){reconnectTimer=setTimeout(connectMarket,12000);}
+    };
+  }catch(e){market.status='WebSocket není dostupný';scheduleRender();}
+}
+function disconnectMarket(){
+  if(reconnectTimer){clearTimeout(reconnectTimer);reconnectTimer=null;}
+  if(socket){const prev=socket;socket=null;prev.onclose=null;try{prev.close();}catch(e){}}
+}
+function scheduleRender(){if(pendingRender)return;pendingRender=true;setTimeout(()=>{pendingRender=false;render();},500);}
+function switchDataMode(mode){
+  if(mode===state.dataMode)return;
+  if(Object.keys(state.positions).length){$('dataMode').value=state.dataMode;toast('Nejdřív uzavři všechny virtuální pozice.',true);return;}
+  stopTimer();disconnectMarket();state.dataMode=mode;
+  market.quotes={BTC:null,ETH:null};market.candles={BTC:[],ETH:[]};market.lastTime={BTC:0,ETH:0};market.status='Vypnuto';
+  state.tickCount=0;store();render();if(mode==='live')connectMarket();
+  toast(mode==='live'?'Připojuji veřejná data Kraken. Obchody zůstávají virtuální.':'Přepnuto na syntetické demo.');
+}
+
+function random(){state.randomSeed=(Math.imul(1664525,state.randomSeed)+1013904223)>>>0;return state.randomSeed/4294967296;}
+function stepSyntheticCandle() {
+  if(state.dataMode!=='demo')return;
+  refreshDay();
+  for(const symbol of ['BTC','ETH']){
+    const previous=price(symbol);
+    const vol=symbol==='BTC'?.011:.016;
+    const wobble=(random()-.5)*vol+Math.sin(state.tickCount/6+(symbol==='BTC'?1:2))*.0026;
+    state.histories[symbol].push(Number((previous*(1+wobble)).toFixed(3)));
+    if(state.histories[symbol].length>130)state.histories[symbol].shift();
+  }
+  state.tickCount++;
+  if(isActive){
+    for(const s of ['BTC','ETH'])evaluateExit(s);
+    checkDailyRisk();
+    if(isActive)for(const s of ['BTC','ETH'])maybeAutoBuy(s);
+  }
+  store();render();
+}
+function startTimer(){
+  if(isActive)return;
+  if(state.runStopped||lossLimitReached()||state.completedToday>=state.settings.maxRoundTrips){
+    if(!Object.keys(state.positions).length){toast('Denní limit zablokoval nové nákupy.',true);return;}
+    toast('Nové nákupy pozastaveny; otevřené virtuální pozice dál sledujeme.');
+  }
+  if(state.dataMode==='live'&& !['BTC','ETH'].some(s=>freshQuote(s))){toast('Nejdřív vyčkej na aktuální ceny Kraken.',true);return;}
+  isActive=true;
+  if(state.dataMode==='demo')timer=setInterval(stepSyntheticCandle,15000);
+  render();toast('Automatické VIRTUÁLNÍ obchodování spuštěno. Jen při otevřené aplikaci.');
+}
+function stopTimer(){
+  if(timer){clearInterval(timer);timer=null;}
+  isActive=false;render();
+}
+function updateChart(){
+  const h=history(activeSymbol), data=h.slice(-52);
+  if(data.length<2){$('chart').innerHTML='<text x="170" y="85" fill="#96a5bd" font-size="14" text-anchor="middle">Čekám na historii 5min svíček</text>';return;}
+  const short=ema(h,12).slice(-data.length),long=ema(h,26).slice(-data.length),all=[...data,...short,...long];
+  const low=Math.min(...all)*.998,high=Math.max(...all)*1.002,range=(high-low)||1;
+  const x=i=>10+i*(320/(data.length-1)),y=v=>145-(v-low)/range*125;
+  const line=arr=>arr.map((v,i)=>`${i===0?'M':'L'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  const fill=line(data)+` L ${x(data.length-1).toFixed(1)},158 L 10,158 Z`;
+  $('chart').innerHTML=`<defs><linearGradient id="chartArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#64eecb" stop-opacity=".26"/><stop offset="100%" stop-color="#64eecb" stop-opacity="0"/></linearGradient></defs><path d="M 10,38 H 330 M 10,82 H 330 M 10,126 H 330" stroke="#233448" stroke-width="1" fill="none" stroke-dasharray="4,5"/><path d="${fill}" fill="url(#chartArea)"/><path d="${line(long)}" fill="none" stroke="#a47cf5" stroke-width="1.4" opacity=".8"/><path d="${line(short)}" fill="none" stroke="#8faaf5" stroke-width="1.7"/><path d="${line(data)}" fill="none" stroke="#65eccc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+function render() {
+  refreshDay();
+  const eq=equity(),diff=eq-START_CAPITAL,pct=100*diff/START_CAPITAL;
+  $('equityHome').innerHTML=`${fmt(eq)} <small>Kč</small>`;
+  $('cashHome').textContent=`Hotovost: ${fmt(state.cash,0)} Kč`;
+  const pl=$('pnlPill');pl.textContent=`${diff>=0?'+':''}${czk(diff)} (${diff>=0?'+':''}${fmt(pct)} %)`;
+  pl.className='change-pill'+(diff>0?'':diff<0?' negative':' neutral');
+  $('positionsCount').textContent=Object.keys(state.positions).length;
+  $('todayCount').textContent=`${state.completedToday} / ${state.settings.maxRoundTrips}`;
+  $('feedStatus').textContent=statusText();
+  $('dataMode').value=state.dataMode;
+  $('profitTarget').textContent=czk(state.settings.targetProfitCzk);
+  $('autoStatus').textContent=isActive?'Aktivní jen při otevření':'Pozastaven';
+  $('paperIndicator').textContent=isActive?'Běží':'Vypnuto';
+  $('clockLabel').textContent=state.tickCount?`${state.tickCount} vytvořených svíček`:'Čistá simulace';
+  document.querySelectorAll('.coin-tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.symbol===activeSymbol));
+  $('marketPrice').textContent=Number.isFinite(price(activeSymbol))?`$ ${fmt(price(activeSymbol),2)}`:'Čekám na cenu';
+  const hh=history(activeSymbol);const diffPrice=hh.length>=2?(hh[hh.length-1]/hh[hh.length-2]-1)*100:0;
+  $('marketMovement').textContent=`${diffPrice>=0?'+':''}${fmt(diffPrice,3)} % / ${state.dataMode==='live'?'5min svíčka Kraken':'poslední umělá svíčka'}`;
+  $('marketMovement').className='chart-sub '+(diffPrice>=0?'positive':'negative');
+  $('simStatus').innerHTML=isActive?'<i class="pulse-dot"></i> Virtuální bot běží':'<i class="pulse-dot off"></i> Bot pozastaven';
+  $('candleCount').textContent=state.dataMode==='live'?`${hh.length} načtených svíček`:`${state.tickCount} nových svíček`;
+  $('toggleBot').textContent=isActive?'■ Zastavit bota':'▶ Spustit virtuálního bota';
+  $('perTradeLimit').textContent=`${fmt(state.settings.maxPosition,0)} Kč / pozice`;
+  $('buyButton').disabled=Boolean(state.positions[activeSymbol])||state.cash<100||state.runStopped||lossLimitReached()||state.completedToday>=state.settings.maxRoundTrips||!Number.isFinite(ask(activeSymbol));
+  $('sellButton').disabled=!state.positions[activeSymbol];
+  const sig=signal(activeSymbol),text={BUY:'Překřížení EMA 12 nad EMA 26 (nákupní signál)',SELL:'Překřížení EMA 12 pod EMA 26 (výstupní signál)',HOLD:'Bez nového překřížení EMA 12/26'}[sig];
+  $('strategyStatus').innerHTML=`<b>Automatika:</b> trend EMA 12/26 + rostoucí 5min svíčka; vstup po uzavření svíčky. <b>Prodej při čistém zisku ≥ ${czk(state.settings.targetProfitCzk)}</b>. Ve ztrátě se automaticky neprodává; nerealizovaná ztráta však může dále růst. Strop ${state.settings.maxRoundTrips} dokončených obchodů/den (nikoliv očekávaný počet). ${state.dataMode==='live'?'Ceny z Kraken, plnění a náklady jsou modelované.':'Syntetické ceny.'} ${lossLimitReached()?' <b class="negative">Dosažen denní limit ztráty.</b>':''}`;
+  updateChart();
+  const positions=Object.values(state.positions);
+  $('positions').innerHTML=positions.length?positions.map(p=>{
+    const val=positionValue(p),profit=val-p.allocated;
+    const alert=profit<=-state.settings.lossAlertCzk?`<div class="risk-warning">⚠ Pozice překročila výstražnou ztrátu ${czk(state.settings.lossAlertCzk)}. Bot automaticky neprodává.</div>`:'';
+    return `<div class="position-item"><div class="item-top"><div><div class="item-title">${html(p.symbol)} · nákup ${czk(p.allocated)}</div><div class="item-sub">Otevřeno ${timeLabel(p.openedAt)} · modelový výstup včetně nákladů</div></div><div class="item-value ${profit>=0?'positive':'negative'}">${profit>=0?'+':''}${czk(profit)}</div></div>${alert}</div>`;
+  }).join(''):'<div class="empty-state">Zatím žádná virtuální pozice.</div>';
+  $('trades').innerHTML=state.trades.length?state.trades.slice(0,12).map(t=>`<div class="trade-item"><div class="item-top"><div><div class="item-title">${t.side==='BUY'?'↙ Nákup':'↗ Prodej'} · ${html(t.symbol)}</div><div class="item-sub">${timeLabel(t.at)} · ${html(t.reason)} · poplatek ${czk(t.fee)}</div></div><div style="text-align:right"><div class="item-value">${czk(t.allocated)}</div><div class="item-sub ${t.pnl===null?'':t.pnl>=0?'positive':'negative'}">${t.pnl===null?'Otevření':(t.pnl>=0?'+':'')+czk(t.pnl)}</div></div></div></div>`).join(''):'<div class="empty-state">Zatím žádné virtuální obchody.</div>';
+  $('taskCount').textContent=`${state.tasks.length} uložených`;
+  $('taskList').innerHTML=state.tasks.length?state.tasks.map(t=>`<div class="task-item"><div class="item-top"><div class="item-title">${html(t.title)}</div><span class="offline-pill">ČEKÁ</span></div><p>${html(t.prompt)}</p><div class="item-top"><span class="item-sub">Uloženo ${timeLabel(t.createdAt)} · dosud nespuštěno</span><button data-delete-task="${t.id}" aria-label="Smazat úkol">Smazat</button></div></div>`).join(''):'<div class="empty-state">Nemáš žádné uložené AI úkoly.</div>';
+  const s=state.settings;
+  for(const [key,id] of Object.entries({maxPosition:'maxPosition',dailyLoss:'dailyLoss',feePct:'feePct',spreadPct:'spreadPct',targetProfitCzk:'targetProfitCzk',lossAlertCzk:'lossAlertCzk',maxRoundTrips:'maxRoundTrips'})){
+    if(document.activeElement!==$(id))$(id).value=s[key];
+  }
+}
+function navigate(tab){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+tab));
+  document.querySelectorAll('.nav-item').forEach(b=>{b.classList.toggle('active',b.dataset.tab===tab);b.setAttribute('aria-current',b.dataset.tab===tab?'page':'false')});
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function openModal(title,text){$('modalTitle').textContent=title;$('modalText').textContent=text;$('dialog').showModal();}
+function exportCsv(){
+  if(!state.trades.length){toast('Žádné příkazy k exportu.');return;}
+  const rows=[['cas','symbol','strana','castka_czk','modelova_nebo_kraken_cena_usd','poplatek_czk','realizovany_zisk_czk','duvod'],...state.trades.map(t=>[t.at,t.symbol,t.side,t.allocated,t.price,t.fee,t.pnl??'',t.reason])];
+  const csv='\ufeff'+rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='omni-paper-obchody.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+function reset(){if(!confirm('Opravdu smazat všechny virtuální obchody, nastavení a AI úkoly na tomto telefonu?'))return;stopTimer();state=newState();store();render();toast('Demo bylo resetováno.');navigate('home');}
+
+document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>navigate(btn.dataset.tab)));
+document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>navigate(btn.dataset.go)));
+document.querySelectorAll('[data-symbol]').forEach(btn=>btn.addEventListener('click',()=>{activeSymbol=btn.dataset.symbol;render();}));
+$('nextCandle').addEventListener('click',()=>{if(state.dataMode==='live'){toast('Na skutečných datech nelze čas ručně posouvat.',true);return;}stepSyntheticCandle();toast('Vytvořena další syntetická 5minutová svíčka.');});
+$('dataMode').addEventListener('change',e=>switchDataMode(e.target.value));
+$('toggleBot').addEventListener('click',()=>{isActive?stopTimer():startTimer();});
+$('buyButton').addEventListener('click',()=>{buy(activeSymbol,true);render();});
+$('sellButton').addEventListener('click',()=>{sell(activeSymbol,'ruční uzavření',true);render();});
+$('exportTrades').addEventListener('click',exportCsv);
+$('taskForm').addEventListener('submit',e=>{
+  e.preventDefault();const title=$('taskTitle').value.trim(),prompt=$('taskPrompt').value.trim();if(!title||!prompt)return;
+  state.tasks.unshift({id:state.nextTaskId++,title,prompt,createdAt:new Date().toISOString()});store();e.target.reset();render();toast('Úkol uložen lokálně. AI ho zatím nevykonává.');
+});
+$('taskList').addEventListener('click',e=>{const btn=e.target.closest('button[data-delete-task]');if(!btn)return;state.tasks=state.tasks.filter(t=>t.id!==Number(btn.dataset.deleteTask));store();render();toast('Úkol smazán.');});
+$('routeTest').addEventListener('click',()=>{$('routeResult').innerHTML='Ukázka: <strong>Model A → nedostupný → Model B vybrán.</strong><br>Jde pouze o animaci logiky, žádný skutečný AI model nebyl osloven.';toast('Ukázkové přepnutí modelu proběhlo bez API volání.');});
+$('settingsForm').addEventListener('submit',e=>{
+  e.preventDefault();const settings={};
+  for(const k of ['maxPosition','dailyLoss','feePct','spreadPct','targetProfitCzk','lossAlertCzk','maxRoundTrips'])settings[k]=Number($(k).value);
+  settings.stopLoss=state.settings.stopLoss;settings.takeProfit=state.settings.takeProfit;
+  if(!(settings.maxPosition>=100&&settings.maxPosition<=2500&&settings.dailyLoss>=10&&settings.dailyLoss<=2500&&settings.feePct>=0&&settings.feePct<=5&&settings.spreadPct>=0&&settings.spreadPct<=5&&settings.targetProfitCzk>=1&&settings.targetProfitCzk<=250&&settings.lossAlertCzk>=1&&settings.lossAlertCzk<=250&&Number.isInteger(settings.maxRoundTrips)&&settings.maxRoundTrips>=1&&settings.maxRoundTrips<=2000))return toast('Zkontroluj rozsah hodnot.',true);
+  state.settings=settings;store();render();toast('Nastavení simulace uloženo.');
+});
+$('resetAll').addEventListener('click',reset);
+$('infoBtn').addEventListener('click',()=>openModal('OmniTrader Pocket v0.4','Virtuální obchody, 2 500 Kč modelového kapitálu. Demo je syntetické; volitelný režim Kraken poskytuje reálné veřejné kotace, ale veškeré obchody a náklady zůstávají pouze simulované. Žádný přístup k Revolut X, žádné API klíče, žádné skutečné AI. Bot funguje výhradně při otevřené aplikaci. Zisky nejsou garantované.'));
+$('howInstall').addEventListener('click',()=>openModal('Instalace na iPhone','1. Nejprve web umísti na HTTPS adresu (např. GitHub Pages).\n2. Otevři tuto adresu v Safari.\n3. Klepni na Sdílet → Přidat na plochu.\n4. Potvrď Přidat.\n\nDemo s umělými cenami funguje offline. Reálné ceny vyžadují internet. Virtuální bot běží jen při otevřené a aktivní aplikaci; po zamknutí telefonu se zastaví.'));
+$('modalClose').addEventListener('click',()=>$('dialog').close());
+$('modalOk').addEventListener('click',()=>$('dialog').close());
+
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){stopTimer();disconnectMarket();market.status='Pozastaveno při zamčení';store();}
+  else if(state.dataMode==='live')connectMarket();
+  render();
+});
+window.addEventListener('pagehide',()=>{stopTimer();disconnectMarket();store();});
+render();if(state.dataMode==='live')connectMarket();
+if('serviceWorker' in navigator && ['https:','http:'].includes(location.protocol)) {
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+
+  </script>
+</body>
+</html>
